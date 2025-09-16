@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template_string
 import math
 
-app = Flask(__name__)
+app = Flask(__app__)
 
 # ✅ Office coordinates (Phoenix Equinix, Hyderabad)
 OFFICE_LAT = 17.437391
