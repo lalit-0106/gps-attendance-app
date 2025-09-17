@@ -81,8 +81,8 @@ html_page = """
       // Office marker
       L.marker([{{OFFICE_LAT}}, {{OFFICE_LON}}]).addTo(map).bindPopup("🏢 PalTech @ Equinox");
 
-      // ✅ Auto zoom to fit circle bounds
-      map.fitBounds(officeCircle.getBounds());
+      // ✅ FIX: keep a fixed zoom so circle radius is visible
+      map.setZoom(17);
     }
 
     initMap();
