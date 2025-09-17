@@ -6,7 +6,7 @@ app = Flask(__name__)
 # ✅ Exact office coordinates (Paltech @ Phoenix Equinox, Hyderabad)
 OFFICE_LAT = 17.436897035819907
 OFFICE_LON = 78.3736962661098
-GEOFENCE_RADIUS_METERS = 200  # changed from 100 → 200 meters
+GEOFENCE_RADIUS_METERS = 300  # changed to 300 meters
 
 # Haversine formula to calculate distance in meters
 def haversine(lat1, lon1, lat2, lon2):
