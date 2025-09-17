@@ -23,7 +23,7 @@ html_page = """
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Timesheet & WFH Geofence</title>
+  <title>Location Based Attendance</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -33,8 +33,8 @@ html_page = """
 </head>
 <body class="bg-gradient-to-r from-blue-500 to-indigo-600 min-h-screen flex items-center justify-center">
   <div class="bg-white shadow-2xl rounded-2xl p-10 w-full max-w-lg text-center">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">📍 Location Based Timesheet</h1>
-    <p class="text-gray-600 mb-4">Your location decides availability of Clock-In/Clock-Out.</p>
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">📍 Location Based Attendance</h1>
+    <p class="text-gray-600 mb-4">Clock In/Out is enabled only when outside office.</p>
 
     <button 
       onclick="getLocation()" 
