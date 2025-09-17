@@ -3,10 +3,10 @@ import math
 
 app = Flask(__name__)
 
-# ✅ Exact office coordinates (Paltech @ Phoenix Equinox, Hyderabad)
-OFFICE_LAT = 17.436897035819907
-OFFICE_LON = 78.3736962661098
-GEOFENCE_RADIUS_METERS = 300  # changed to 300 meters
+# ✅ Office coordinates (PalTech @ Equinox, Hyderabad)
+OFFICE_LAT = 17.436178044750875
+OFFICE_LON = 78.37202511729197
+GEOFENCE_RADIUS_METERS = 300  # 300 meters
 
 # Haversine formula to calculate distance in meters
 def haversine(lat1, lon1, lat2, lon2):
@@ -23,7 +23,7 @@ html_page = """
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Attendance & Timesheet Geofence</title>
+  <title>Timesheet & WFH Geofence</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -33,7 +33,7 @@ html_page = """
 </head>
 <body class="bg-gradient-to-r from-blue-500 to-indigo-600 min-h-screen flex items-center justify-center">
   <div class="bg-white shadow-2xl rounded-2xl p-10 w-full max-w-lg text-center">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">📍 Attendance & Timesheet Geofence</h1>
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">📍 Location Based Timesheet</h1>
     <p class="text-gray-600 mb-4">Your location decides availability of Clock-In/Clock-Out.</p>
 
     <button 
@@ -64,7 +64,7 @@ html_page = """
 
     // Initialize Leaflet map
     function initMap() {
-      map = L.map('map').setView([{{OFFICE_LAT}}, {{OFFICE_LON}}], 18);
+      map = L.map('map').setView([{{OFFICE_LAT}}, {{OFFICE_LON}}], 17);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
@@ -79,7 +79,10 @@ html_page = """
       }).addTo(map);
 
       // Office marker
-      L.marker([{{OFFICE_LAT}}, {{OFFICE_LON}}]).addTo(map).bindPopup("🏢 Paltech @ Phoenix Equinox Office");
+      L.marker([{{OFFICE_LAT}}, {{OFFICE_LON}}]).addTo(map).bindPopup("🏢 PalTech @ Equinox");
+
+      // ✅ Auto zoom to fit circle bounds
+      map.fitBounds(officeCircle.getBounds());
     }
 
     initMap();
@@ -157,7 +160,7 @@ html_page = """
           map.removeLayer(userMarker);
         }
         userMarker = L.marker([lat, lon]).addTo(map).bindPopup("📍 Your Location").openPopup();
-        map.setView([lat, lon], 18);
+        map.setView([lat, lon], 17);
       });
     }
 
@@ -183,12 +186,7 @@ html_page = """
 
 @app.route("/")
 def index():
-    return render_template_string(
-        html_page, 
-        OFFICE_LAT=OFFICE_LAT, 
-        OFFICE_LON=OFFICE_LON, 
-        GEOFENCE_RADIUS_METERS=GEOFENCE_RADIUS_METERS
-    )
+    return render_template_string(html_page, OFFICE_LAT=OFFICE_LAT, OFFICE_LON=OFFICE_LON, GEOFENCE_RADIUS_METERS=GEOFENCE_RADIUS_METERS)
 
 @app.route("/check_access", methods=["POST"])
 def check_access():
