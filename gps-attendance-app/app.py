@@ -3,10 +3,10 @@ import math
 
 app = Flask(__name__)
 
-# ✅ Office coordinates (PalTech @ Equinox, Hyderabad)
-OFFICE_LAT = 17.436178044750875
-OFFICE_LON = 78.37202511729197
-GEOFENCE_RADIUS_METERS = 300  # 300 meters
+# ✅ Updated Office coordinates
+OFFICE_LAT = 17.436922670529196
+OFFICE_LON = 78.37390625737486
+GEOFENCE_RADIUS_METERS = 150  # 🔽 Reduced to 150 meters
 
 # Haversine formula to calculate distance in meters
 def haversine(lat1, lon1, lat2, lon2):
@@ -62,7 +62,6 @@ html_page = """
     const NUM_READINGS = 5;
     let map, officeCircle, userMarker;
 
-    // Initialize Leaflet map
     function initMap() {
       map = L.map('map').setView([{{OFFICE_LAT}}, {{OFFICE_LON}}], 17);
 
@@ -70,7 +69,6 @@ html_page = """
         attribution: '&copy; OpenStreetMap contributors'
       }).addTo(map);
 
-      // Office geofence circle
       officeCircle = L.circle([{{OFFICE_LAT}}, {{OFFICE_LON}}], {
         color: 'red',
         fillColor: '#f03',
@@ -78,10 +76,7 @@ html_page = """
         radius: {{GEOFENCE_RADIUS_METERS}}
       }).addTo(map);
 
-      // Office marker
-      L.marker([{{OFFICE_LAT}}, {{OFFICE_LON}}]).addTo(map).bindPopup("🏢 PalTech @ Equinox");
-
-      // ✅ FIX: keep a fixed zoom so circle radius is visible
+      L.marker([{{OFFICE_LAT}}, {{OFFICE_LON}}]).addTo(map).bindPopup("🏢 Office Location");
       map.setZoom(17);
     }
 
@@ -155,7 +150,6 @@ html_page = """
           btn.style.display = "none";
         }
 
-        // Update user marker on map
         if (userMarker) {
           map.removeLayer(userMarker);
         }
